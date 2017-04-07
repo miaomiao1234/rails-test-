@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
 
   def edit
     @movie = Movie.find(params[:id])
-  end 
+  end
 
   def new
     @movie = Movie.new
@@ -23,10 +23,18 @@ def create
   redirect_to movies_path
 end
 
+def update
+  @movie = Movie.find(params[:id])
+
+  @movie.update(movie_params)
+
+  redirect_to movies_path, notice: "更新成功"
+end
+
 private
 
 def movie_params
-  params.require(:movie).permit(:title, :decription)
+  params.require(:movie).permit(:title, :description)
 end
 
 end
