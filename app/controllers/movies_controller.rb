@@ -31,6 +31,13 @@ def update
   redirect_to movies_path, notice: "更新成功"
 end
 
+def destroy
+  @movie = Movie.find(params[:id])
+  @movie.destroy
+  flash[:alert] = "电影已删除"
+  redirect_to movies_path
+end
+
 private
 
 def movie_params
