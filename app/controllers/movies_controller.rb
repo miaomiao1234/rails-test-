@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :authenticate_user! ,only: [:new, :create ]
+  before_action :authenticate_user! ,only: [:new, :create, :edite, :update, :destroy ]
 
   def index
     @movies = Movie.all
@@ -11,6 +11,9 @@ class MoviesController < ApplicationController
 
   def edit
     @movie = Movie.find(params[:id])
+    if current_user != @movie.user
+      redirect_to root_path, alert: "你没有权限进行此操作"
+    end
   end
 
   def new
@@ -20,7 +23,7 @@ end
 def create
   @movie = Movie.new(movie_params)
   @movie.user = current_user
-  
+
   if @movie.save
 
   redirect_to movies_path
@@ -32,6 +35,10 @@ end
 def update
   @movie = Movie.find(params[:id])
 
+  if current_user != @movie.user
+    redirect_to root_path, alert: "你没有权限进行此操作"
+  end
+
 if   @movie.update(movie_params)
 
   redirect_to movies_path, notice: "更新成功"
@@ -42,6 +49,11 @@ end
 
 def destroy
   @movie = Movie.find(params[:id])
+
+  if current_user != @movie.user
+    redirect_to movies_path alert: "你没有权限进行此操作"
+  end
+  
   @movie.destroy
   flash[:alert] = "电影已删除"
   redirect_to movies_path
