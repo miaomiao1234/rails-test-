@@ -23,7 +23,7 @@ def create
   @movie.user = current_user
 
   if @movie.save
-
+  current_user.collect!(@movie)
   redirect_to movies_path
 else
   render :new
