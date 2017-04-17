@@ -6,13 +6,13 @@
         <label class="label label-success">已收藏</label>
         <%= link_to("取消收藏", cancel_movie_path(@movie), method: :post, class: "btn btn-default" ) %>
           <% else %>
-          <label class="label label-warning">还未收藏</label>
+          <label class="label label-warning">还未收藏-收藏后可评论</label>
           <%= link_to("收藏该影片",collect_movie_path(@movie), method: :post, class: "btn btn-default") %>
       <% end %>
   </span>
-
+ <% if current_user && current_user.is_collect_of?(@movie) %>
     <%= link_to("编写评论", new_movie_review_path(@movie), class: "btn btn-default pull-right")%>
-
+<% end %>
     <% if current_user && current_user == @movie.user %>
     <%= link_to("编辑",edit_movie_path(@movie), class: "btn btn-primary pull-right" )%>
     <% end %>

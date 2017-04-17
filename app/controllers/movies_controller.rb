@@ -62,9 +62,9 @@ def collect
 end
 
 def cancel
-  @movie = Movie.find(parames[:id])
+  @movie = Movie.find(params[:id])
 
-  if current_user.is_collect_of?(movie)
+  if current_user.is_collect_of?(@movie)
     current_user.cancel!(@movie)
     flash[:notice] = "已取消收藏"
   else
