@@ -8,5 +8,18 @@ class User < ApplicationRecord
          has_many :reviwes
 
          has_many :movie_relationships
-         has_many :participated_movies, :through => :movie_relationships, :source => :movie 
+         has_many :participated_movies, :through => :movie_relationships, :source => :movie
+
+   def is_collect_of?(movie)
+     participated_movies.include?(movie)
+   end
+
+   def collect!(movie)
+     participated_movies << movie
+   end
+
+   def cancel!(movie)
+     participated_movies.delete(movie)
+   end
+   
 end
