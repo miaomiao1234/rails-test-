@@ -12,6 +12,7 @@ end
 
 namespace :account do
   resources :movies
+  resources :reviews
 end
 
 root 'movies#index'
