@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
 
-  before_action :authenticate_user!, :only => [:new, :create]
+  before_action :authenticate_user!, :only => [:new, :create, :edit, :update, :destroy]
+  before_action :find_review, :only =>[:edit, :update, :destroy]
 
   def new
     @movie = Movie.find(params[:movie_id])
@@ -21,10 +22,41 @@ class ReviewsController < ApplicationController
 
 end
 
+
+  def edit
+  end
+
+  def show
+  end
+
+  def update
+
+    if
+      @review.update(review_params)
+      redirect_to movie_path, notice:"修改评论成功！"
+    else
+      render edit
+    end
+
+  end
+
+  def destroy
+
+    @review.destroy
+     flash[:alert]= "已删除评论！"
+    redirect_to movie_path
+  end
+
+
+
 private
 
 def review_params
-  params.require(:review).permit(:content)
+params.require(:review).permit(:content,  )
 end
+
+def find_review
+  @review = Review.find(review_params[:id])
+  end
 
 end
