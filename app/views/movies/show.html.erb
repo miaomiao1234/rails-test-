@@ -33,7 +33,7 @@
   <% @reviews.each do |review| %>
   <tr>
     <td><%= review.user.email %></td>
-    <td><%= simple_format(review.content) %></td>
+    <td><%= render_review_content(review) %></td>
     <td><%= review.created_at %></td>
     <td>
       <% if current_user && current_user == review.user %>
