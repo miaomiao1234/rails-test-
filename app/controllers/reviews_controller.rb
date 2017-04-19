@@ -56,7 +56,10 @@ params.require(:review).permit(:content,  )
 end
 
 def find_review
-  @review = Review.find(review_params[:id])
+  @movie = Movie.find(params[:movie_id])
+  @review = @movie.reviews.find(review_params[:id])
+  @review.movie = @movie
+  @review.user = current_user
   end
 
 end
