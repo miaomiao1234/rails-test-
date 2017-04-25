@@ -1,6 +1,6 @@
 class Movie < ApplicationRecord
   belongs_to :user
-  has_many :reviews
+  has_many :reviews , dependent: :destroy
   validates :title, presence: true
 
   has_many :movie_relationships

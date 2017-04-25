@@ -19,34 +19,4 @@
 </div>
 <h2><%= @movie.title %></h2>
 <p><%= @movie.description %></p>
-
-<table class= "table">
-  <thead>
-    <tr>
-      <th>发表者</th>
-      <th>评论内容</th>
-      <th>发表时间</th>
-  </tr>
-</thead>
-
-<tbody>
-  <% @reviews.each do |review| %>
-  <tr>
-    <td><%= review.user.email %></td>
-    <td><%= render_review_content(review) %></td>
-    <td><%= review.created_at %></td>
-    <td>
-      <% if current_user && current_user == review.user %>
-    <%= link_to("编辑", edit_movie_review_path(review.movie, review),class: "btn btn-sm btn-default")%>
-    <%= link_to("删除", movie_review_path(review.movie, review),class: "btn btn-sm btn-default", method: :delete,data:{confirm:"确定删除吗？"}) %>
-    <% end %>
-  </td>
-</tr>
-<% end %>
-</tbody>
-</table>
-
-<div class="text-center">
-  <%= will_paginate @reviews %>
-</div>
-</div>
+<%= render "reviews/index"%>
