@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
 
   before_action :authenticate_user!, :only => [:new, :create, :edit, :update, :destroy]
-
+  before_action :require_collect
   def new
     @movie = Movie.find(params[:movie_id])
     @review = Review.new
@@ -41,7 +41,7 @@ end
       @review.update(review_params)
       redirect_to movie_path(params[:movie_id]), notice:"修改评论成功！"
     else
-      render edit
+      render :edit
     end
 
   end
@@ -53,7 +53,7 @@ end
     @review.user = current_user
     @review.destroy
      flash[:alert]= "已删除评论！"
-    redirect_to movie_path(@movie)
+    redirect_to (@movie)
   end
 
 
@@ -64,5 +64,12 @@ def review_params
 params.require(:review).permit(:content,  )
 end
 
+def require_collect
+  @movie = Movie.find(params[:movie_id])
+  unless current_user.is_collect_of?(@movie)
+    flash[:alert]= "你妹的！请先收藏该电影！！！"
+      redirect_to (@movie)
+  end
+end
 
 end
